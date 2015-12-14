@@ -5,9 +5,10 @@ That's why we've created a plugin to easily copy, paste and remove guides from y
 
 ## Installation
 To install the plugin you should perform the following actions;
-- 1. Download the .zip file and copy 'Copy & Paste Guides.sketchplugin'
-- 2. Open Sketch and navigate to 'Plugins > Manage Plugins > [cog symbol] > Show plugins folder
-- 3. Paste the 'Copy & Paste Guides.sketchplugin' into the plugins folder
+
+1. Download the .zip file and copy 'Copy & Paste Guides.sketchplugin'
+2. Open Sketch and navigate to 'Plugins > Manage Plugins > [cog symbol] > Show plugins folder
+3. Paste the 'Copy & Paste Guides.sketchplugin' into the plugins folder
 
 Once you're done, you can now use the plugin!
 
