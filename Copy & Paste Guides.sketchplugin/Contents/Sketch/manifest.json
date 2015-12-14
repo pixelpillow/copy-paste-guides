@@ -1,0 +1,56 @@
+{  
+   "author":"Enzio Rossa",
+   "bundleVersion":1,
+   "commands":[  
+      {  
+         "script":"script.sketchplugin",
+         "handler":"copyRulers",
+         "shortcut":"ctrl shift c",
+         "name":"1. Copy Guides",
+         "identifier":"copy"
+      },
+      {  
+         "script":"script.sketchplugin",
+         "handler":"pasteRulers",
+         "shortcut":"ctrl shift v",
+         "name":"2. Paste Guides",
+         "identifier":"paste"
+      },
+      {  
+         "script":"script.sketchplugin",
+         "handler":"removeRulers",
+         "shortcut":"ctrl shift r",
+         "name":"3. Remove Guides",
+         "identifier":"remove"
+      },
+      {  
+         "script":"script.sketchplugin",
+         "handler":"pasteToAll",
+         "name":"5. Paste To All Artboards",
+         "identifier":"pasteAll"
+      },
+      {  
+         "script":"script.sketchplugin",
+         "handler":"removeFromAll",
+         "name":"6. Remove From All Artboards",
+         "identifier":"removeAll"
+      }
+   ],
+   "menu":{  
+      "title":"Copy & Paste Guides",
+      "items":[  
+         "copy",
+         "paste",
+         "remove",
+         "grid",
+         "pasteAll",
+         "removeAll"
+      ]
+   },
+   "compatibleVersion":"3.4.2",
+   "identifier":"",
+   "version":"0.8.0",
+   "description":"Copy & Paste Guides",
+   "homepage":"https:\/\/pixelpillow.nl",
+   "name":"Copy & Paste Guides"
+}

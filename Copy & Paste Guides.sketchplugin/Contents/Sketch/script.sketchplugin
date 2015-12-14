@@ -1,0 +1,170 @@
+@import 'lib/utils.js';
+@import 'lib/functions.js';
+
+var presets = {
+    verticalRulers: [],
+    horizontalRulers: []
+}
+
+var pluginDomain = "com.pixelpillow.copy-paste-guides";
+var userDefaults = initDefaults(pluginDomain, presets);
+
+var doc = undefined;
+var selection = undefined;
+var page = undefined;
+var artboard = undefined;
+var current = undefined;
+var target = undefined;
+var artboards = undefined;
+
+function initDoc(context){
+    doc = context.document;
+    selection = context.selection;
+    page = doc.currentPage();
+    artboard = page.currentArtboard();
+    current = doc.currentPage().currentArtboard();
+
+    target = current;
+}
+
+
+function copyRulers(context){
+
+    initDoc(context);
+
+    var countVertical = [[target verticalRulerData] numberOfGuides]
+    var countHorizontal = [[target horizontalRulerData] numberOfGuides]
+
+    if(countVertical != 0 || countHorizontal != 0){
+        // Vertical rulers
+        var vRulers = [];
+
+        for(var i=0; i < countVertical; i++) {
+            var thisRuler = [[target verticalRulerData] guideAtIndex:i]
+            vRulers.push(thisRuler);
+        }
+
+        userDefaults.verticalRulers = vRulers;
+
+        // Horizontal rulers
+        var hRulers = [];
+
+        for(var i=0; i < countHorizontal; i++) {
+            var thisRuler = [[target horizontalRulerData] guideAtIndex:i]
+            hRulers.push(thisRuler);
+        }
+
+        userDefaults.horizontalRulers = hRulers;
+
+        // Save values
+        saveDefaults(userDefaults);
+
+        // Inform the user
+        [doc showMessage:"Guides are copied to clipboard."]
+        } else {
+            [doc showMessage:"No guides to be copied."]
+        }
+}
+
+function pasteRulers(context){
+    initDoc(context);
+
+    var vRulers = userDefaults.verticalRulers;
+    var hRulers = userDefaults.horizontalRulers;
+
+    if(vRulers.count() != 0 || hRulers.count() != 0){
+
+        artboards = [[doc currentPage] artboards];
+
+        for (i = 0; i < selection.count(); i++) {
+            thisSelection = selection[i];
+
+            for (j = 0; j < artboards.count(); j++) {
+
+                var artboard = artboards[j];
+
+                if(thisSelection == artboard){
+                    target = artboard;
+                    paste(target);
+                }
+            }
+        }
+
+        // Inform the user
+        [doc showMessage:"Guides are pasted to selected artboard(s)"]
+    }
+
+    else {
+        [doc showMessage:"There are no guides copied to be pasted."]
+    }
+}
+
+function removeRulers(context){
+    initDoc(context);
+
+    artboards = [[doc currentPage] artboards];
+
+    for (i = 0; i < selection.count(); i++) {
+        thisSelection = selection[i];
+
+        for (j = 0; j < artboards.count(); j++) {
+
+            var artboard = artboards[j];
+
+            if(thisSelection == artboard){
+                target = artboard;
+                remove(target);
+            }
+        }
+    }
+
+    [doc showMessage:"Removed all guides from selected artboard(s)."]
+
+}
+
+function createAlertBase() {
+  var alert = COSAlertWindow.new();
+
+  alert.addButtonWithTitle('Apply');
+  alert.addButtonWithTitle('Cancel');
+
+  return alert;
+}
+
+function pasteToAll(context){
+    initDoc(context);
+
+    var vRulers = userDefaults.verticalRulers;
+    var hRulers = userDefaults.horizontalRulers;
+
+    if(vRulers.count() != 0 || hRulers.count() != 0){
+
+        artboards = [[doc currentPage] artboards];
+        log(artboards.count());
+
+        for (i = 0; i < artboards.count(); i++) {
+            var artboard = artboards[i];
+            paste(artboard);
+        }
+
+        // Inform the user
+        [doc showMessage:"Guides are pasted to all artboards"]
+    }
+
+    else {
+        [doc showMessage:"There are no guides copied to be pasted."]
+    }
+}
+
+function removeFromAll(context){
+    initDoc(context);
+    artboards = [[doc currentPage] artboards];
+
+    for (i = 0; i < artboards.count(); i++) {
+        var artboard = artboards[i];
+        remove(artboard);
+    }
+
+    [doc showMessage:"Removed all guides from all artboards."]
+
+}
